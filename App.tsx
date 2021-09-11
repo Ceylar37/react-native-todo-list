@@ -1,21 +1,37 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import {StatusBar} from 'expo-status-bar';
+import React, {useEffect} from 'react';
+import {StyleSheet, Text, View, NativeModules, SafeAreaView, Platform, Dimensions} from 'react-native';
+import TodoList from "./src/components/TodoList/TodoList";
+import todos from "./src/store/todos";
+import Header from "./src/components/Header/Header";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+const {StatusBarManager} = NativeModules
+
+const App = () => {
+    useEffect(() => {
+        todos.fetchTodos()
+    }, [])
+
+    return (
+        <SafeAreaView style={{backgroundColor: '#D9B5A5'}}>
+            <View style={styles.container}>
+                <StatusBar style="auto" backgroundColor={'#D9B5A5'}/>
+                <Header/>
+                <TodoList/>
+            </View>
+        </SafeAreaView>
+    )
+};
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    container: {
+        marginTop: StatusBarManager.HEIGHT + 13,
+        backgroundColor: '#D9B5A5',
+        height: Dimensions.get('window').height
+    },
+    androidSafeArea: {
+        paddingTop: Platform.OS === "android" ? StatusBarManager.HEIGHT : 0
+    },
 });
+
+export default App
