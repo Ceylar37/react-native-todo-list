@@ -2,6 +2,7 @@ import {ITodo} from "../../store/todos";
 import React from "react";
 import {observer} from "mobx-react-lite";
 import {Button, Pressable, StyleSheet, Text, View} from "react-native";
+import {action} from "mobx";
 
 interface IProps {
     todo: ITodo,
@@ -15,16 +16,16 @@ const Todo: React.FC<IProps> = observer((props) => {
         <View style={styles.container}>
             <Pressable style={props.isEven
                 ? {...styles.evenElement, ...styles.element}
-                : {...styles.oddElement, ...styles.element}} onPress={() => {
+                : {...styles.oddElement, ...styles.element}} onPress={action(() => {
                 props.markTodo(props.todo.id)
-            }}>
+            })}>
                 <Text style={props.todo.completed ? {...styles.text, ...styles.completed} : styles.text}>
                     {props.todo.title}
                 </Text>
             </Pressable>
-            <Pressable style={styles.deleteButton} onPress={() => {
+            <Pressable style={styles.deleteButton} onPress={action(() => {
                 props.deleteTodo(props.todo.id)
-            }}>
+            })}>
                 <Text style={styles.deleteButtonText}>x</Text>
             </Pressable>
         </View>

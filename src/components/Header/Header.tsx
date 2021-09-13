@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Alert, Modal, Pressable, StyleSheet, Text, TextInput, View} from "react-native";
 import todos from "../../store/todos";
+import {action} from "mobx";
 
 const Header = () => {
 
@@ -45,10 +46,11 @@ const Header = () => {
                             </Pressable>
                             <Pressable disabled={!addInputText}
                                 style={styles.submitButton}
-                                onPress={() => {
+                                onPress={action(() => {
                                     todos.addTodo(addInputText)
                                     setModalVisible(!modalVisible)
-                                }}
+                                    editAddInputText('')
+                                })}
                             >
                                 <Text style={styles.textStyle}>Enter</Text>
                             </Pressable>

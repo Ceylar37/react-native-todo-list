@@ -1,4 +1,9 @@
-import {makeAutoObservable} from "mobx";
+import {makeAutoObservable, runInAction} from "mobx";
+import { configure } from "mobx"
+
+configure({
+    enforceActions: "never",
+})
 
 export interface ITodo {
     id: number,
@@ -23,16 +28,16 @@ class Todos {
     }
 
     addTodo(title: string) {
-        if (title) this.state.push({id: Date.now(), title, completed: false})
+            if (title) this.state.push({id: Date.now(), title, completed: false})
     }
 
     markTodo(id: number) {
         const foundedTodo = this.state?.find(todo => todo.id === id)
-        if (foundedTodo) foundedTodo.completed = !foundedTodo.completed
+            if (foundedTodo) foundedTodo.completed = !foundedTodo.completed
     }
 
     deleteTodo(id: number) {
-        this.state = this.state.filter(todo => todo.id !== id)
+            this.state = this.state.filter(todo => todo.id !== id)
     }
 
     get getState() {

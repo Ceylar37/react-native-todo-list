@@ -4,13 +4,14 @@ import {StyleSheet, Text, View, NativeModules, SafeAreaView, Platform, Dimension
 import TodoList from "./src/components/TodoList/TodoList";
 import todos from "./src/store/todos";
 import Header from "./src/components/Header/Header";
+import {action} from "mobx";
 
 const {StatusBarManager} = NativeModules
 
 const App = () => {
-    useEffect(() => {
+    useEffect(action(() => {
         todos.fetchTodos()
-    }, [])
+    }), [])
 
     return (
         <SafeAreaView style={{backgroundColor: '#D9B5A5'}}>
